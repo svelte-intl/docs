@@ -9,9 +9,9 @@
 
 <DocsLayout {navigation}>
 	{#snippet logo()}
-		<SvecosystemDark class="hidden max-h-6 dark:block" />
-		<SvecosystemLight class="block max-h-6 dark:hidden" />
-		<span class="sr-only">svelte-i18n</span>
+		<SvecosystemDark class="hidden max-h-10 dark:block" />
+		<SvecosystemLight class="block max-h-10 dark:hidden" />
+		<span class="sr-only">Svecodocs</span>
 	{/snippet}
 
 	{@render children?.()}

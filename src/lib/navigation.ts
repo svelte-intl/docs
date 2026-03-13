@@ -10,19 +10,19 @@ const miscellaneous = allDocs
 	.filter((doc) => doc.section === "Miscellaneous")
 	.map((doc) => ({
 		title: doc.title,
-		href: `/${doc.slug}`,
+		href: `/docs/${doc.slug}`,
 	}));
 
 export const navigation = defineNavigation({
 	anchors: [
 		{
 			title: "Introduction",
-			href: "/",
+			href: "/docs",
 			icon: ChalkboardTeacher,
 		},
 		{
 			title: "Getting Started",
-			href: "/getting-started",
+			href: "/docs/getting-started",
 			icon: RocketLaunch,
 		},
 		{
