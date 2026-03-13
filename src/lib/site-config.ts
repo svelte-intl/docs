@@ -1,10 +1,10 @@
 import { defineSiteConfig } from "@svecodocs/kit";
 
 export const siteConfig = defineSiteConfig({
-	name: "Svecodocs",
+	name: "svelte-i18n",
 	url: "https://svelte-i18n.com",
 	ogImage: {
-		url: "https://docs.svelte-i18n.com/og.png",
+		url: "https://svelte-i18n.com/og.png",
 		height: "630",
 		width: "1200",
 	},

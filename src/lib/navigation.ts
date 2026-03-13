@@ -6,30 +6,23 @@ import { getAllDocs } from "./utils.js";
 
 const allDocs = getAllDocs();
 
-const components = allDocs
-	.filter((doc) => doc.section === "Components")
-	.map((doc) => ({
-		title: doc.title,
-		href: `/docs/${doc.slug}`,
-	}));
-
 const miscellaneous = allDocs
 	.filter((doc) => doc.section === "Miscellaneous")
 	.map((doc) => ({
 		title: doc.title,
-		href: `/docs/${doc.slug}`,
+		href: `/${doc.slug}`,
 	}));
 
 export const navigation = defineNavigation({
 	anchors: [
 		{
 			title: "Introduction",
-			href: "/docs",
+			href: "/",
 			icon: ChalkboardTeacher,
 		},
 		{
 			title: "Getting Started",
-			href: "/docs/getting-started",
+			href: "/getting-started",
 			icon: RocketLaunch,
 		},
 		{
