@@ -1,6 +1,6 @@
 ---
-title: Load dictionary using callback
-description: Learn how to load dictionaries using a callback
+title: Load dictionary async
+description: Learn how to load dictionaries using a async callback
 section: Miscellaneous
 ---
 

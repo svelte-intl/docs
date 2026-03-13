@@ -51,8 +51,8 @@
     "slugFull": "/miscellaneous/dictionaries"
   },
   {
-    "title": "Load dictionary using callback",
-    "description": "Learn how to load dictionaries using a callback",
+    "title": "Load dictionary async",
+    "description": "Learn how to load dictionaries using a async callback",
     "path": "miscellaneous/load-dictionaries-callback",
     "content": "<h2>Load dictionaries from resource</h2>\n<p>You can load dictionaries using an (async) callback. This makes it possible to load dictionaries from a database or URL</p>\n<pre><code class=\"language-ts\" metastring=\"title=&#x22;src/lib/i18n.ts&#x22;\">export const { i18n, useI18n } = await createI18n({\n    // ...\n    dictionaries: {\n        // To get typescript autocompletion replace \n        // Record&#x3C;string, string> with correct typings\n        nl: async (): Promise&#x3C;Record&#x3C;string, string>> => {\n            try {\n                const request = await fetch('https://example.com/locales/nl');\n                const json = await response.json();\n\n                return json;\n            } catch(err) {\n                console.error(err)\n                return {};\n            }\n\t\t},\n        // ...\n    }\n});\n</code></pre>",
     "raw": "## Load dictionaries from resource\n\nYou can load dictionaries using an (async) callback. This makes it possible to load dictionaries from a database or URL\n\n```ts title=\"src/lib/i18n.ts\"\nexport const { i18n, useI18n } = await createI18n({\n    // ...\n    dictionaries: {\n        // To get typescript autocompletion replace \n        // Record<string, string> with correct typings\n        nl: async (): Promise<Record<string, string>> => {\n            try {\n                const request = await fetch('https://example.com/locales/nl');\n                const json = await response.json();\n\n                return json;\n            } catch(err) {\n                console.error(err)\n                return {};\n            }\n\t\t},\n        // ...\n    }\n});\n```",
