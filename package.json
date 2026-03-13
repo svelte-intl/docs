@@ -1,0 +1,33 @@
+{
+	"name": "@svelte-i18n/docs",
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "pnpm \"/dev:/\"",
+		"dev:content": "velite dev --watch",
+		"dev:svelte": "vite dev",
+		"build": "velite && node ./scripts/update-velite-output.js && pnpm build:search && vite build",
+		"build:search": "node ./scripts/build-search-data.js",
+		"preview": "vite preview",
+		"check": "velite && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "pnpm build:content && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+	},
+	"devDependencies": {
+		"@svecodocs/kit": "^0.5.1",
+		"@sveltejs/adapter-cloudflare": "^7.2.8",
+		"@sveltejs/kit": "^2.54.0",
+		"@sveltejs/vite-plugin-svelte": "^6.2.4",
+		"@tailwindcss/vite": "^4.2.1",
+		"mdsx": "^0.0.6",
+		"phosphor-svelte": "^3.1.0",
+		"svelte": "^5.53.11",
+		"svelte-check": "^4.4.5",
+		"tailwindcss": "^4.2.1",
+		"typescript": "^5.9.3",
+		"velite": "^0.2.4",
+		"vite": "^7.3.1"
+	},
+	"dependencies": {
+		"@svelte-i18n/core": "^1.0.0"
+	}
+}
