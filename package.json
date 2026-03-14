@@ -1,6 +1,6 @@
 {
 	"name": "@svelte-i18n/docs",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"type": "module",
 	"scripts": {
 		"dev": "pnpm \"/dev:/\"",
@@ -11,8 +11,8 @@
 		"preview": "vite preview",
 		"check": "velite && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "pnpm build:content && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-        "changeset": "pnpm exec changeset",
-        "changeset:version": "pnpm exec changeset version"
+		"changeset": "pnpm exec changeset",
+		"changeset:version": "pnpm exec changeset version"
 	},
 	"devDependencies": {
 		"@changesets/cli": "^2.30.0",
