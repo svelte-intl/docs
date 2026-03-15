@@ -8,19 +8,11 @@ section: Overview
 	import { Callout } from '@svecodocs/kit'
 </script>
 
-<Callout type="warning" title="v2">
-
-Version 2 aims to simplify setup further and improve SSR reliability. 
-In v1, changing the locale can cause a brief flicker because components initially render using the default locale before updating. 
-v2 will address this issue to ensure seamless locale switching without visual artifacts.
-
-</Callout>
-
-- ✅ Easy to use
-- ✅ Easiest setup we can come up with
-- ✅ Safe to use with SSR by default
-- ✅ No external dependencies
-- ✅ Very small footprint (8kb)
+- **Svelte 5** ✅
+- **Runes and not stores** ✅
+- **Easy to use** ✅
+- **SSR ready** ✅
+- **No external dependencies** ✅
 
 ## Motivation
 
