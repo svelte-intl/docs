@@ -33,7 +33,7 @@ translation dictionary
 
 Svelte-i18n is SSR safe by default, since we are using the [context API](https://svelte.dev/docs/svelte/context) 
 
-<Callout type="warning" title="Type safety">
+<Callout type="tip" title="Type safety">
 
 Parameter types are inferred from the key string, not the translated value. 
 Keys like `"Hello, \{username\}!"` are fully type-safe, but opaque keys like 
