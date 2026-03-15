@@ -36,5 +36,5 @@ export const navigation = defineNavigation({
 			title: "Miscellaneous",
 			items: miscellaneous,
 		}
-	],
+	]
 });

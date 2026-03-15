@@ -11,8 +11,8 @@
 		"preview": "vite preview",
 		"check": "velite && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "pnpm build:content && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-        "changeset": "pnpm exec changeset",
-        "changeset:version": "pnpm exec changeset version"
+		"changeset": "pnpm exec changeset",
+		"changeset:version": "pnpm exec changeset version"
 	},
 	"devDependencies": {
 		"@changesets/cli": "^2.30.0",
@@ -23,14 +23,14 @@
 		"@tailwindcss/vite": "^4.2.1",
 		"mdsx": "^0.0.6",
 		"phosphor-svelte": "^3.1.0",
-		"svelte": "^5.53.11",
+		"svelte": "^5.53.12",
 		"svelte-check": "^4.4.5",
 		"tailwindcss": "^4.2.1",
 		"typescript": "^5.9.3",
 		"velite": "^0.2.4",
-		"vite": "^7.3.1"
+		"vite": "^8.0.0"
 	},
 	"dependencies": {
-		"@svelte-i18n/core": "^1.0.1"
+		"@svelte-i18n/core": "^1.2.0"
 	}
 }

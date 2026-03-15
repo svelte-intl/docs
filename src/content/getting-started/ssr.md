@@ -1,15 +1,18 @@
 ---
-title: Getting Started
-description: A quick guide to get started with svelte-i18n
+title: Getting Started (SSR)
+description: A quick guide to get started with svelte-i18n in SSR
 section: Overview
 ---
 
 <script>
 	import { Callout, Tabs, TabItem, Steps, Step, CardGrid, Card } from "@svecodocs/kit";
     import CaretRightIcon from "phosphor-svelte/lib/CaretRightIcon";
+
+    let setupType = $state('ssr');
+    $inspect(setupType)
 </script>
 
-The following guide will walk you through the process of getting svelte-i18n up and running.
+The following guide will walk you through the process of getting svelte-i18n up and running in a SSR context.
 
 ## Configuration
 <Steps>
@@ -21,31 +24,6 @@ You can install the project via `npm` or `pnpm`.
 npm install @svelte-i18n/core # pnpm add @svelte-i18n/core
 ```
 
-<Step>+layout.ts</Step>
-
-```ts title="src/routes/+layout.ts"
-import { createI18n } from '@svelte-i18n/core';
-
-export const load = async ({ data }) => {
-	const i18n = await createI18n({
-		locales: ['en', 'nl'],
-		locale: 'en',
-		fallbackLocale: 'en',
-		dictionaries: {
-			en: async () => {
-				return (await import('$lib/locales/en.json')).default;
-			},
-			nl: async () => {
-				return (await import('$lib/locales/nl.json')).default;
-			}
-		}
-	});
-
-	return {
-		i18n
-	};
-};
-```
 <Step>Create i18n.ts</Step>
 
 Create a new file called `i18n.ts` inside `src/lib` to initialize `svelte-i18n`.
@@ -121,6 +99,7 @@ There are two methods to do this.
 </script>
 
 {t("Welcome, {user}", { user })}
+<!-- Welcome, Richard -->
 ```
 
 </Steps>
