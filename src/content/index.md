@@ -8,11 +8,11 @@ section: Overview
 	import { Callout } from '@svecodocs/kit'
 </script>
 
-- ✅ Easy to use
-- ✅ Easiest setup we can come up with
-- ✅ Safe to use with SSR by default
-- ✅ No external dependencies
-- ✅ Very small footprint (8kb)
+- **Svelte 5** ✅
+- **Runes and not stores** ✅
+- **Easy to use** ✅
+- **SSR ready** ✅
+- **No external dependencies** ✅
 
 ## Motivation
 

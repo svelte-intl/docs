@@ -1,4 +1,4 @@
----
+<!-- ---
 title: Persistent locale
 description: Learn how to safe to make the locale persistent
 section: Miscellaneous
@@ -75,4 +75,4 @@ export const { i18n, useI18n } = await createI18n({
 });
 ```
 
-</Steps>
+</Steps> -->
