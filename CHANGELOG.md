@@ -1,5 +1,11 @@
 # @svelte-i18n/docs
 
+## 3.0.1
+
+### Patch Changes
+
+- 73e3124: update lockfile
+
 ## 3.0.0
 
 ### Major Changes
