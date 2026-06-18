@@ -1,5 +1,15 @@
 # @svelte-i18n/docs
 
+## 3.0.0
+
+### Major Changes
+
+- ca4e454: feat; new extend functionality to use fine grained translations
+
+### Minor Changes
+
+- aa6ec9c: feat [#12]; update docs to reflect the new HTML lang attr changes
+
 ## 2.0.0
 
 ### Major Changes
