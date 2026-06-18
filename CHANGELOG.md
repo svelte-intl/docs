@@ -1,5 +1,11 @@
 # @svelte-i18n/docs
 
+## 3.0.2
+
+### Patch Changes
+
+- 69d6f1f: comply with pnpm new allowBuilds security measures
+
 ## 3.0.1
 
 ### Patch Changes
