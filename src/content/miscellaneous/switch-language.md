@@ -1,6 +1,6 @@
-<!-- ---
+---
 title: Persistent locale
-description: Learn how to safe to make the locale persistent
+description: Learn how locale persistence and the HTML lang attribute work
 section: Miscellaneous
 ---
 
@@ -8,7 +8,9 @@ section: Miscellaneous
     import { Callout, Steps, Step } from "@svecodocs/kit";
 </script>
 
-Somewhere in your app, you have this
+When a user switches language, `setLocale` updates the active locale **and** stores it in a cookie (default name: `lang`). On the next page load, your server can read that cookie and pass the correct locale to `createI18n`.
+
+## Language switcher
 
 ```svelte
 <script lang="ts">
@@ -26,53 +28,92 @@ Somewhere in your app, you have this
 </div>
 ```
 
-This is a very basic method of changing the locale, and in a real world app you would store the locale somewhere
-so that the correct locale is persisted when the site gets refreshed.
+No extra persistence logic is required — the cookie is written automatically when `setLocale` is called in the browser.
 
-Here is a guide how you can achieve that.
+## Read the cookie on the server
 
-<Steps>
+In `+layout.server.ts`, read the same cookie and pass it to your layout load function:
 
-<Step>Edit $lib/i18n</Step>
+```ts title="src/routes/+layout.server.ts"
+export const load = async ({ cookies }) => {
+	const locale = cookies.get('lang');
 
-In you `i18n.ts` file create a new method to retrieve the locale from a persistend storage, like the `localeStorage`.
+	return {
+		locale: locale ?? 'en'
+	};
+};
+```
 
-```ts title="src/lib/i18n.ts" {5-25}
-import { createI18n } from '$lib/i18n';
-import nl from './locales/nl.json';
-import en from './locales/en.json';
+Then use `data.locale` when creating the i18n instance:
 
-// add this
-const locales = ['en', 'nl'];
-const fallbackLocale = 'en';
+```ts title="src/routes/+layout.ts"
+export const load = async ({ data }) => {
+	const i18n = await createI18n({
+		locales: ['en', 'nl'],
+		locale: data.locale,
+		fallbackLocale: 'en',
+		dictionaries: {
+			// ...
+		}
+	});
 
-function loadLocale() {
-	// If using SSR, we can't access localStorage, so we return early
-	if (!browser) {
-		return fallbackLocale;
+	return { i18n };
+};
+```
+
+## Custom cookie name
+
+Override the default cookie name (`lang`) via `cookieName` in `createI18n`:
+
+```ts
+const i18n = await createI18n({
+	locales: ['en', 'nl'],
+	locale: data.locale,
+	cookieName: 'locale',
+	dictionaries: {
+		// ...
 	}
-
-	if (localStorage.getItem('locale')) {
-		return localStorage.getItem('locale') as string;
-	}
-
-	const language = navigator.language.split('-')[0];
-	if (locales.includes(language)) {
-		return language;
-	}
-
-	return fallbackLocale;
-}
-
-export const { i18n, useI18n } = await createI18n({
-    locales,
-    locale: loadLocale(),
-    fallbackLocale,
-    dictionaries: {
-        nl,
-        en
-    }
 });
 ```
 
-</Steps> -->
+Use the same name in `+layout.server.ts` and `hooks.server.ts`.
+
+## HTML `lang` attribute
+
+For accessibility and SEO, the document language should match the active locale.
+
+### Client-side
+
+`setLocale` updates `document.documentElement.lang` automatically when the user switches language.
+
+### Server-side (SSR)
+
+Set a placeholder in `app.html`:
+
+```html title="src/app.html"
+<html lang="%lang%">
+```
+
+Then replace `%lang%` in a server hook using the cookie value:
+
+```ts title="src/hooks.server.ts"
+import type { Handle } from '@sveltejs/kit';
+
+const COOKIE_NAME = 'lang';
+const FALLBACK_LOCALE = 'en';
+
+export const handle: Handle = async ({ event, resolve }) => {
+	const locale = event.cookies.get(COOKIE_NAME);
+
+	return resolve(event, {
+		transformPageChunk: ({ html }) =>
+			html.replace('%lang%', locale ?? FALLBACK_LOCALE)
+	});
+};
+```
+
+<Callout type="note">
+
+Use the same cookie name everywhere: `createI18n({ cookieName })`, `+layout.server.ts`, and `hooks.server.ts`.
+
+</Callout>
