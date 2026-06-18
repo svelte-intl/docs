@@ -173,3 +173,9 @@ export const createI18n = (i18n: () => I18nContext) =>
 ```
 
 </Steps>
+
+<Callout type="note" title="Route-specific translations">
+
+Not every message belongs in the root layout dictionary. Use [`extend`](/docs/miscellaneous/extend) in a `+page.ts` or `+layout.ts` load function to add translations for a single route — for example lazy-loaded JSON or keys fetched from an API.
+
+</Callout>
