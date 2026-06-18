@@ -5,9 +5,20 @@ section: Overview
 ---
 
 <script>
-	import { Callout, Tabs, TabItem, Steps, Step, CardGrid, Card } from "@svecodocs/kit";
+	import { Callout, Tabs, TabItem, Steps, Step, CardGrid, Card, Button } from "@svecodocs/kit";
     import CaretRightIcon from "phosphor-svelte/lib/CaretRightIcon";
 </script>
+
+<Callout type="warning" title="Type safety">
+
+Parameter types are inferred from the key string, not the translated value. 
+Keys like `"Hello, \{username\}!"` are fully type-safe, but opaque keys like 
+`"welcome_banner"` won't have typed parameters even if the value contains placeholders.
+
+</Callout>
+
+This library has full TypeScript support, your translation keys are autocompleted when you call `t("Hello, {username}!", { username: 'Richard' })`, 
+and if a message contains variables like `{username}`, TypeScript will enforce that you pass the correct arguments.
 
 The following guide will walk you through the process of getting svelte-i18n up and running.
 
@@ -21,9 +32,21 @@ You can install the project via `npm` or `pnpm`.
 npm install @svelte-i18n/core # pnpm add @svelte-i18n/core
 ```
 
-<Step>+layout.ts</Step>
+<Step>+layout.server.ts</Step>
 
-Edit the `+layout.ts` file or create it if it doesn't exist.
+Read the locale cookie on the server so the user's language preference survives a page refresh.
+
+```ts title="src/routes/+layout.server.ts"
+export const load = async ({ cookies }) => {
+	const locale = cookies.get('lang');
+
+	return {
+		locale: locale ?? 'en'
+	};
+};
+```
+
+<Step>+layout.ts</Step>
 
 ```ts title="src/routes/+layout.ts"
 import { createI18n } from '@svelte-i18n/core';
@@ -31,7 +54,7 @@ import { createI18n } from '@svelte-i18n/core';
 export const load = async ({ data }) => {
 	const i18n = await createI18n({
 		locales: ['en', 'nl'],
-		locale: 'en',
+		locale: data.locale,
 		fallbackLocale: 'en',
 		dictionaries: {
             // You can also import them at the top level 
@@ -50,6 +73,37 @@ export const load = async ({ data }) => {
 	};
 };
 ```
+
+When the user switches language via `setLocale`, the locale is stored in a cookie named `lang` by default. Override the name with `cookieName` if needed:
+
+```ts
+const i18n = await createI18n({
+	// ...
+	cookieName: 'locale'
+});
+```
+
+<Step>app.html and hooks.server.ts</Step>
+
+Set the HTML `lang` attribute for SSR by using a placeholder in `app.html` and replacing it in a server hook:
+
+```html title="src/app.html"
+<html lang="%lang%">
+```
+
+```ts title="src/hooks.server.ts"
+import type { Handle } from '@sveltejs/kit';
+
+export const handle: Handle = async ({ event, resolve }) => {
+	const locale = event.cookies.get('lang');
+
+	return resolve(event, {
+		transformPageChunk: ({ html }) => html.replace('%lang%', locale ?? 'en')
+	});
+};
+```
+
+On the client, `setLocale` also updates `document.documentElement.lang` when the user switches language.
 
 <Step>Edit +layout.svelte</Step>
 

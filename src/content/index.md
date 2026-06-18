@@ -5,7 +5,8 @@ section: Overview
 ---
 
 <script>
-	import { Callout } from '@svecodocs/kit'
+	import { Callout, Button } from '@svecodocs/kit';
+    import CaretRightIcon from "phosphor-svelte/lib/CaretRightIcon";
 </script>
 
 - **Svelte 5** ✅
@@ -31,25 +32,15 @@ translation dictionary
 }
 ```
 
-Svelte-i18n is SSR safe by default, since we are using the [context API](https://svelte.dev/docs/svelte/context) 
+Svelte-i18n is SSR safe by default, since we are using the [context API](https://svelte.dev/docs/svelte/context). When users switch language, `setLocale` persists the locale in a cookie (`lang` by default) and updates the HTML `lang` attribute on the client.
 
-<Callout type="tip" title="Type safety">
+## What this is not
 
-Parameter types are inferred from the key string, not the translated value. 
-Keys like `"Hello, \{username\}!"` are fully type-safe, but opaque keys like 
-`"welcome_banner"` won't have typed parameters even if the value contains placeholders.
+svelte-i18n is not intended to replace feature-rich libraries like Wuchale, inlang or Paraglide.js. Those solutions offer advanced capabilities for complex translation needs, such as deeply nested keys or managing large volumes of strings. Instead, svelte-i18n is designed for projects that require straightforward, key-value translations without extensive configuration or overhead.
 
-</Callout>
-
-This library has full TypeScript support, your translation keys are autocompleted when you call `t("Hello, {username}!", { username: 'Richard' })`, 
-and if a message contains variables like `{username}`, TypeScript will enforce that you pass the correct arguments.
-
-```svelte
-<script lang="ts">
-    import { useI18n } from '$lib/i18n';
-
-    const { t } = useI18n();
-</script>
-
-{t('Hello, {username}!', { username: 'Richard' })}
-```
+<div class="mt-8 flex justify-end">
+    <Button variant="link">
+        Getting started
+        <CaretRightIcon/>
+    </Button>
+</div>
