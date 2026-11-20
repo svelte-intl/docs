@@ -1,38 +1,31 @@
-# sv
+# @svelte-i18n/docs
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Source of [svelte-i18n.com](https://svelte-i18n.com), the documentation for [`@svelte-i18n/core`](https://www.npmjs.com/package/@svelte-i18n/core).
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+SvelteKit 3 + `adapter-static`. Every page is prerendered to plain HTML.
 
 ```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+pnpm install
+pnpm dev      # http://localhost:5173
+pnpm build    # static site in ./build
+pnpm check    # type-check
 ```
 
-## Developing
+## Writing docs
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- Pages live in `src/content/docs/<slug>.md`. `index.md` is `/docs`.
+- Frontmatter: `title` (H1 and sidebar), `description` (meta description, ~150 chars), optional `seoTitle` (the `<title>`).
+- Add the slug to `NAV` in `src/lib/site.ts`. The build fails if a page is missing from the navigation, or the navigation points to a missing page.
+- Code blocks: ` ```ts title="src/lib/i18n.ts" ` shows a file name. Prefer complete files over fragments.
+- Callouts: `> [!NOTE]`, `> [!TIP]`, `> [!WARNING]`.
+- Examples target SvelteKit 3 (`#lib/....ts` imports, `Handle` from `@sveltejs/kit/hooks`).
 
-```bash
-npm run dev
+## Generated for search engines and LLMs
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+| URL | Source |
+|---|---|
+| `/sitemap.xml`, `/robots.txt` | `src/routes/sitemap.xml`, `src/routes/robots.txt` |
+| `/llms.txt`, `/llms-full.txt` | `src/lib/server/llms.ts` |
+| `/docs/<slug>.md` | Raw Markdown of every page |
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Old URLs are redirected in `nginx.conf`.

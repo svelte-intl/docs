@@ -1,3 +1,322 @@
-@import "@svecodocs/kit/theme-pink.css";
-@import "@svecodocs/kit/globals.css";
-@source "../node_modules/@svecodocs/kit";
+:root {
+	--brand: #e6266e;
+	--brand-2: #ff6b35;
+	--brand-text: #c81d5c;
+	--bg: #ffffff;
+	--bg-soft: #f7f7f8;
+	--bg-code: #f6f8fa;
+	--border: #e5e5e8;
+	--text: #1b1b1f;
+	--text-muted: #5f6068;
+	--note: #2f6fdf;
+	--tip: #1a8a4a;
+	--warning: #b8740b;
+	--radius: 10px;
+	--header-h: 60px;
+	--font: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	--mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+	color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		--brand-text: #ff5c93;
+		--bg: #111114;
+		--bg-soft: #18181c;
+		--bg-code: #16161a;
+		--border: #2a2a30;
+		--text: #ececf1;
+		--text-muted: #a0a0ab;
+		--note: #6fa1ff;
+		--tip: #4cc47f;
+		--warning: #f0ad3c;
+		color-scheme: dark;
+	}
+}
+
+:root[data-theme='dark'] {
+	--brand-text: #ff5c93;
+	--bg: #111114;
+	--bg-soft: #18181c;
+	--bg-code: #16161a;
+	--border: #2a2a30;
+	--text: #ececf1;
+	--text-muted: #a0a0ab;
+	--note: #6fa1ff;
+	--tip: #4cc47f;
+	--warning: #f0ad3c;
+	color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+body {
+	margin: 0;
+	background: var(--bg);
+	color: var(--text);
+	font-family: var(--font);
+	font-size: 16px;
+	line-height: 1.65;
+	-webkit-font-smoothing: antialiased;
+}
+
+a {
+	color: var(--brand-text);
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+code,
+pre {
+	font-family: var(--mono);
+	font-size: 0.875em;
+}
+
+:focus-visible {
+	outline: 2px solid var(--brand);
+	outline-offset: 2px;
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	height: 44px;
+	padding: 0 20px;
+	border-radius: 999px;
+	border: 1px solid var(--border);
+	background: var(--bg);
+	color: var(--text);
+	font: 600 15px/1 var(--font);
+	cursor: pointer;
+}
+.btn:hover {
+	text-decoration: none;
+	border-color: var(--text-muted);
+}
+.btn-primary {
+	background: var(--brand);
+	border-color: var(--brand);
+	color: #fff;
+}
+.btn-primary:hover {
+	background: #cf1f61;
+	border-color: #cf1f61;
+}
+
+/* ---------- Code (Shiki dual theme) ---------- */
+
+.shiki,
+.shiki span {
+	color: var(--shiki-light);
+	background-color: transparent !important;
+}
+:root[data-theme='dark'] .shiki,
+:root[data-theme='dark'] .shiki span {
+	color: var(--shiki-dark);
+}
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) .shiki,
+	:root:not([data-theme='light']) .shiki span {
+		color: var(--shiki-dark);
+	}
+}
+
+figure.code {
+	position: relative;
+	margin: 20px 0;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	background: var(--bg-code);
+	overflow: hidden;
+}
+figure.code pre {
+	margin: 0;
+	padding: 16px 18px;
+	overflow-x: auto;
+	line-height: 1.6;
+	tab-size: 4;
+}
+.code-title {
+	padding: 8px 80px 8px 18px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	border-bottom: 1px solid var(--border);
+	color: var(--text-muted);
+	font: 500 13px/1.4 var(--mono);
+}
+figure.code .copy {
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	padding: 4px 10px;
+	border: 1px solid var(--border);
+	border-radius: 6px;
+	background: var(--bg);
+	color: var(--text-muted);
+	font: 500 12px/1.4 var(--font);
+	cursor: pointer;
+	opacity: 0;
+	transition: opacity 0.15s;
+}
+figure.code:hover .copy,
+figure.code .copy:focus-visible,
+figure.code .copy[data-copied] {
+	opacity: 1;
+}
+@media (hover: none) {
+	figure.code .copy {
+		opacity: 1;
+	}
+}
+@media (max-width: 640px) {
+	figure.code pre {
+		padding: 14px;
+		tab-size: 2;
+	}
+}
+
+/* ---------- Prose ---------- */
+
+.prose {
+	min-width: 0;
+}
+.prose > :first-child {
+	margin-top: 0;
+}
+.prose h2 {
+	margin: 48px 0 12px;
+	font-size: 1.5rem;
+	line-height: 1.3;
+	letter-spacing: -0.01em;
+}
+.prose h3 {
+	margin: 32px 0 8px;
+	font-size: 1.15rem;
+}
+.prose h2,
+.prose h3 {
+	position: relative;
+}
+.prose .anchor {
+	position: absolute;
+	left: -0.9em;
+	color: var(--text-muted);
+	opacity: 0;
+	text-decoration: none;
+}
+.prose h2:hover .anchor,
+.prose h3:hover .anchor {
+	opacity: 1;
+}
+.prose p,
+.prose ul,
+.prose ol {
+	margin: 12px 0;
+}
+.prose li {
+	margin: 4px 0;
+}
+.prose :not(pre) > code {
+	padding: 2px 6px;
+	border-radius: 5px;
+	background: var(--bg-soft);
+	border: 1px solid var(--border);
+	font-size: 0.85em;
+	overflow-wrap: anywhere;
+}
+.prose a code {
+	color: var(--brand-text);
+}
+.prose img {
+	display: block;
+	margin: 20px 0;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+}
+.prose .table {
+	margin: 20px 0;
+	overflow-x: auto;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+}
+.prose table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.925rem;
+}
+.prose th,
+.prose td {
+	padding: 10px 14px;
+	border-bottom: 1px solid var(--border);
+	text-align: left;
+	vertical-align: top;
+}
+.prose th {
+	background: var(--bg-soft);
+	font-weight: 600;
+}
+.prose tr:last-child td {
+	border-bottom: 0;
+}
+.prose blockquote {
+	margin: 20px 0;
+	padding: 4px 16px;
+	border-left: 3px solid var(--border);
+	color: var(--text-muted);
+}
+
+.callout {
+	--c: var(--note);
+	margin: 20px 0;
+	padding: 12px 16px;
+	border: 1px solid color-mix(in srgb, var(--c) 35%, transparent);
+	border-left: 4px solid var(--c);
+	border-radius: var(--radius);
+	background: color-mix(in srgb, var(--c) 7%, transparent);
+}
+.callout-tip {
+	--c: var(--tip);
+}
+.callout-warning,
+.callout-important {
+	--c: var(--warning);
+}
+.callout > p {
+	margin: 6px 0;
+}
+.callout-title {
+	color: var(--c);
+	font-weight: 700;
+	font-size: 0.875rem;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}

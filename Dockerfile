@@ -1,17 +1,17 @@
-# Stage 1: Build
+# Stage 1: build the static site
 FROM node:22-alpine AS builder
 
-RUN corepack enable && corepack prepare pnpm@9.15.9 --activate
+RUN corepack enable
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 RUN pnpm install --frozen-lockfile
 
 COPY . .
 RUN pnpm build
 
-# Stage 2: Serve
+# Stage 2: serve with nginx
 FROM nginx:alpine AS runner
 
 COPY --from=builder /app/build /usr/share/nginx/html
