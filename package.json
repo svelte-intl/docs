@@ -12,7 +12,7 @@
 		"changeset:version": "changeset version"
 	},
 	"devDependencies": {
-		"@changesets/cli": "^3.0.3",
+		"@changesets/cli": "^2.31.1",
 		"@sveltejs/adapter-static": "^4.0.1",
 		"@sveltejs/kit": "^3.4.0",
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",
