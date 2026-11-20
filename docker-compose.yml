@@ -1,0 +1,22 @@
+# Dokploy: create a Compose service (type: Docker Compose)
+#   Provider: GitHub → svelte-intl/docs, branch main, Compose Path ./docker-compose.yml
+#   Domains tab: svelte-i18n.com → service "docs", container port 80, HTTPS on.
+# Dokploy adds the Traefik labels and network for the domain itself, so this
+# file publishes no ports.
+#
+# Local test: docker compose run --rm -p 8080:80 docs  → http://localhost:8080
+services:
+  docs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: svelte-i18n-docs:latest
+    restart: unless-stopped
+    expose:
+      - "80"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
